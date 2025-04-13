@@ -16,9 +16,9 @@ const URL = import.meta.env.VITE_IMAGE_URL;
 const screenSizeLarge = window.matchMedia("(min-width: 1024px)").matches;
 
 const SwiperCarousel = () => {
-  const { isLoading, data } = useMovies();
+  const { isLoading, trendingMovies } = useMovies();
 
-  const slicedData = data.slice(0, 6);
+  const slicedData = trendingMovies.slice(15, 20);
 
   const pagination = {
     clickable: true,
