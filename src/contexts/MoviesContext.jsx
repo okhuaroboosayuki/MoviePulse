@@ -15,7 +15,7 @@ const MoviesContext = createContext();
 
 const initialState = {
   isLoading: false,
-  data: [],
+  trendingMovies: [],
   genres: [],
 };
 
@@ -26,10 +26,10 @@ const reducer = (state, action) => {
         ...state,
         isLoading: action.payload,
       };
-    case "data/loaded":
+    case "trending/loaded":
       return {
         ...state,
-        data: action.payload,
+        trendingMovies: action.payload,
       };
     case "genres/loaded":
       return {
@@ -42,7 +42,7 @@ const reducer = (state, action) => {
 };
 
 const MoviesProvider = ({ children }) => {
-  const [{ isLoading, data, genres }, dispatch] = useReducer(reducer, initialState);
+  const [{ isLoading, trendingMovies, genres }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -66,7 +66,7 @@ const MoviesProvider = ({ children }) => {
           }
         });
 
-        dispatch({ type: "data/loaded", payload: moviesResponse.results });
+        dispatch({ type: "trending/loaded", payload: moviesResponse.results });
         dispatch({ type: "genres/loaded", payload: combinedGenres });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -78,7 +78,7 @@ const MoviesProvider = ({ children }) => {
     fetchAllData();
   }, []);
 
-  return <MoviesContext.Provider value={{ isLoading, data, genres }}>{children}</MoviesContext.Provider>;
+  return <MoviesContext.Provider value={{ isLoading, trendingMovies, genres }}>{children}</MoviesContext.Provider>;
 };
 
 export { MoviesProvider, MoviesContext };
