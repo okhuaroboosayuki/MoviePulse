@@ -5,6 +5,8 @@
 @theme {
   --font-dm-sans: "DM Sans", sans-serif;
   --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+  --animate-spin: spin 1s linear infinite;
+  --animate-spin-alternate: spin 1s linear infinite reverse;
 
   @keyframes fade-in-scale {
     0% {
@@ -14,6 +16,15 @@
     100% {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }
