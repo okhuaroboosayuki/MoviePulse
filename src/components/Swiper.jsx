@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import PlayIcon from "/assets/icons/play_Icon.svg";
 import ImdbIcon from "/assets/icons/imdb_icon.svg";
 import RottenIcon from "/assets/icons/rotten_tomatoes_icon.svg";
+import useMovies from "../hooks/useMovies";
+import { truncateDecimals } from "../utils";
 
 import { Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,18 +11,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const truncateDecimals = (number, decimals) => {
-  const factor = Math.pow(10, decimals);
-  return Math.round(number * factor) / factor;
-};
-
 const URL = import.meta.env.VITE_IMAGE_URL;
 
 const screenSizeLarge = window.matchMedia("(min-width: 1024px)").matches;
 
 const SwiperCarousel = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { isLoading, data } = useMovies();
+
+  const slicedData = data.slice(0, 6);
 
   const pagination = {
     clickable: true,
@@ -30,25 +27,6 @@ const SwiperCarousel = () => {
       return `<span class="${className}">${index + 1}</span>`;
     },
   };
-
-  console.log(screenSizeLarge);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`http://localhost:8000/results`);
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <Swiper
@@ -62,14 +40,14 @@ const SwiperCarousel = () => {
       pagination={pagination}
       effect="fade"
       fadeEffect={{ crossFade: true }}>
-      {!loading &&
-        data.map((movie) => {
+      {!isLoading &&
+        slicedData.map((movie) => {
           const imageURL = `${URL}/${movie.backdrop_path}`;
 
           return (
             <SwiperSlide key={movie.id}>
               <div
-                className="flex flex-col justify-center w-full h-full bg-gray-400 bg-blend-multiply"
+                className="flex flex-col justify-center w-full h-full bg-gray-600 bg-blend-multiply"
                 style={{
                   backgroundImage: `url(${imageURL})`,
                   backgroundPosition: "center",
