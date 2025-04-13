@@ -64,7 +64,7 @@ const MovieCard = ({ movie }) => {
 
         <h3 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h3>
 
-        <div className="flex items-center justify-between w-full text-[#111827] text-[15px]">
+        <div className="flex items-center justify-between md:w-full w-[250px] text-[#111827] text-[15px]">
           <p className="flex items-center justify-center gap-2.5  font-normal">
             <img src={ImdbIcon} alt="IMDB icon" />
             <span>{truncateDecimals(movie.vote_average * 10, 1)} / 100</span>
@@ -78,7 +78,10 @@ const MovieCard = ({ movie }) => {
 
         <div className="flex items-center flex-wrap gap-1 w-full text-[#9CA3AF] text-[14px] font-bold">
           {currentMovieGenres.map((genre, index) => (
-            <p key={index}>{genre + ","}</p>
+            <p key={index}>
+              {genre}
+              {index < currentMovieGenres.length - 1 && ","}
+            </p>
           ))}
         </div>
       </div>
