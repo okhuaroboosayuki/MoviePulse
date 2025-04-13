@@ -55,7 +55,7 @@
       @apply text-base text-white!;
 
       &::before {
-        @apply content-[""] block w-3 h-0.5 bg-white absolute sm:top-[11px] -top-2 sm:-left-[15px] rotate-90 sm:rotate-0;
+        @apply content-[""] block w-3 h-0.5 bg-white absolute sm:top-[11px] -top-2 sm:-left-[15px] -left-0.5 rotate-90 sm:rotate-0;
       }
     }
   }
