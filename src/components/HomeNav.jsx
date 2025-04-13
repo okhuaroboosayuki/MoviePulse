@@ -1,15 +1,7 @@
 import { useEffect } from "react";
 import SearchInput from "./SearchInput";
 import Logo from "/assets/icons/tv.png";
-
-/**
- * Sets the overflow property of the document based on the provided boolean value.
- *
- * @param {boolean} isOpen - If true, disables scrolling by setting overflow to hidden. If false, restores scrolling by resetting overflow properties.
- */
-function setDocumentOverFlow(isOpen) {
-  isOpen ? (document.body.style.overflow = "") : (document.body.style.overflow = "hidden");
-}
+import { setDocumentOverFlow } from "../utils";
 
 const HomeNav = () => {
   const handleMenuToggle = () => {
@@ -31,16 +23,18 @@ const HomeNav = () => {
     window.addEventListener("resize", () => {
       if (menuIcon.classList.contains("toggle-menu")) handleMenuToggle();
     });
+
+    return () => window.removeEventListener("resize", handleMenuToggle);
   }, []);
 
   return (
     <div className="flex items-center justify-between py-5 w-full z-10">
-      <div className="flex items-center justify-center gap-3 lg:gap-6 text-white text-lg lg:text-2xl font-bold">
+      <div className="flex items-center justify-center gap-3 lg:gap-6 text-white text-lg lg:text-2xl font-bold z-50">
         <img src={Logo} alt="MoviePulse's logo" />
         <span>MoviePulse</span>
       </div>
 
-      <SearchInput />
+      <SearchInput className={"lg:w-[525px] md:w-[60%] w-full hidden md:flex border-2 border-white py-1.5 px-2.5 rounded-[6px] focus-within:border-gray-300"} textColor={"text-white"} />
 
       <div className="flex items-center gap-7 text-white">
         <button className="capitalize font-bold lg:block hidden">sign in</button>
@@ -70,13 +64,7 @@ const HomeNav = () => {
               <a href="">upcoming</a>
             </li>
             <li className="w-full mt-10 md:hidden block">
-              <input
-                type="search"
-                name=""
-                id=""
-                placeholder="What do you want to watch?"
-                className="border h-12 outline-none w-full placeholder:text-[#333333] placeholder:text-[15px] text-[#333333] text-base p-2 rounded-md"
-              />
+              <SearchInput className={"border h-12 w-full text-base p-2 rounded-md"} textColor={"text-[#333333]"} />
             </li>
             <li className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full lg:hidden">
               <a href="">sign in</a>
