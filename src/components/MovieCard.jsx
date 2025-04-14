@@ -58,9 +58,21 @@ const MovieCard = ({ movie }) => {
       </div>
 
       <div className="flex flex-col items-start justify-center gap-3 w-full">
-        <p className="text-[#9CA3AF] font-bold text-[14px]">
-          {movie.origin_country} {movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A"}
-        </p>
+        <div className="text-[#9CA3AF] font-bold text-[14px] flex gap-2 items-start w-full">
+          {movie.origin_country && (
+            <p className="flex items-center justify-center gap-0.5">
+              {movie.origin_country.length > 0
+                ? movie.origin_country.map((c, i) => (
+                    <span key={i}>
+                      {c}
+                      {i < movie.origin_country.length - 1 && ", "}
+                    </span>
+                  ))
+                : movie.origin_country}
+            </p>
+          )}
+          <span>{movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A"}</span>
+        </div>
 
         <h2 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h2>
 
