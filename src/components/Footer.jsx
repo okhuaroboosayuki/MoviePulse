@@ -1,6 +1,19 @@
 const Footer = () => {
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.onscroll = function () {
+    document.body.scrollTop > 1400 || document.documentElement.scrollTop > 1400 ? (backToTopBtn.style.display = "block") : (backToTopBtn.style.display = "none");
+  };
+
+  const handleBackToTop = () => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: 0,
+    });
+  };
+
   return (
-    <footer className="flex items-center justify-center flex-col w-full pt-37 pb-20 gap-9">
+    <footer className="flex items-center justify-center flex-col w-full pt-37 pb-20 gap-9 relative">
       <div className="flex items-center justify-center gap-12">
         <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
           <g clipPath="url(#clip0_1268_880)">
@@ -65,6 +78,14 @@ const Footer = () => {
           </a>
         </span>
       </p>
+
+      <button
+        className="fixed p-4 text-base text-white border-none rounded-md sm:bottom-10 bottom-5 right-3 bg-[#111827] transition-1000-in cursor-pointer"
+        id="backToTop"
+        title="Go to top"
+        onClick={handleBackToTop}>
+        ↑
+      </button>
     </footer>
   );
 };
