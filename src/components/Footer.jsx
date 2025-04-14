@@ -2,7 +2,7 @@ const Footer = () => {
   const backToTopBtn = document.getElementById("backToTop");
 
   window.onscroll = function () {
-    document.body.scrollTop > 1400 || document.documentElement.scrollTop > 1400 ? (backToTopBtn.style.display = "block") : (backToTopBtn.style.display = "none");
+    document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000 ? (backToTopBtn.style.display = "block") : (backToTopBtn.style.display = "none");
   };
 
   const handleBackToTop = () => {
