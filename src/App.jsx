@@ -5,6 +5,7 @@ import { MoviesProvider } from "./contexts/MoviesContext";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SingleMoviePage = lazy(() => import("./pages/SingleMoviePage"));
+const FeaturedMovies = lazy(() => import("./pages/FeaturedMovies"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/movie" element={<SingleMoviePage />} />
+            <Route path="/featured-movies" element={<FeaturedMovies />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Suspense>
