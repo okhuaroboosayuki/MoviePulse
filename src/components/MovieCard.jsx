@@ -16,7 +16,7 @@ const MovieCard = ({ movie }) => {
   const imageURL = `${URL}/${movie.backdrop_path}`;
 
   return (
-    <div className="w-full h-fit flex flex-col items-start justify-center gap-3">
+    <li className="w-full h-fit flex flex-col items-start justify-center gap-3">
       <div
         className="h-[370px] w-full bg-gray-400 bg-blend-multiply"
         style={{
@@ -62,7 +62,7 @@ const MovieCard = ({ movie }) => {
           {movie.origin_country} {movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A"}
         </p>
 
-        <h3 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h3>
+        <h2 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h2>
 
         <div className="flex items-center justify-between md:w-full w-[250px] text-[#111827] text-[15px]">
           <p className="flex items-center justify-center gap-2.5  font-normal">
@@ -85,7 +85,7 @@ const MovieCard = ({ movie }) => {
           ))}
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 
