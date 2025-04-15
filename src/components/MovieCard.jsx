@@ -13,14 +13,14 @@ const MovieCard = ({ movie }) => {
     return genre ? genre.name : "";
   });
 
-  const imageURL = `${URL}/${movie.backdrop_path}`;
+  const imageURL = movie.backdrop_path === null || movie.poster_path === null ? "" : `${URL}/${movie.backdrop_path || movie.poster_path}`;
 
   return (
     <li className="w-full h-fit flex flex-col items-start justify-center gap-3">
       <div
         className="h-[370px] w-full bg-gray-400 bg-blend-multiply"
         style={{
-          backgroundImage: `url(${imageURL})`,
+          backgroundImage: `url(${imageURL ? imageURL : "/assets/images/no_image_found.png"})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}>
