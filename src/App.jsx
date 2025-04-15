@@ -18,7 +18,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="movie" element={<SingleMoviePage />} />
             <Route path="featured-movies" element={<FeaturedMovies />} />
-            <Route path="search/:id" element={<SearchPage />} />
+            <Route path="search" element={<SearchPage />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Suspense>
