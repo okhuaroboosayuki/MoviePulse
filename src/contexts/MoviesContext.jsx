@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useCallback, useEffect, useReducer } from "react";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
@@ -17,6 +17,7 @@ const initialState = {
   isLoading: false,
   trendingMovies: [],
   genres: [],
+  searchResults: [],
 };
 
 const reducer = (state, action) => {
@@ -36,13 +37,18 @@ const reducer = (state, action) => {
         ...state,
         genres: action.payload,
       };
+    case "searchResults/loaded":
+      return {
+        ...state,
+        searchResults: action.payload,
+      };
     default:
       return state;
   }
 };
 
 const MoviesProvider = ({ children }) => {
-  const [{ isLoading, trendingMovies, genres }, dispatch] = useReducer(reducer, initialState);
+  const [{ isLoading, trendingMovies, genres, searchResults }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -78,7 +84,25 @@ const MoviesProvider = ({ children }) => {
     fetchAllData();
   }, []);
 
-  return <MoviesContext.Provider value={{ isLoading, trendingMovies, genres }}>{children}</MoviesContext.Provider>;
+  const searchMovies = useCallback(
+    async (searchQuery) => {
+      dispatch({ type: "loading", payload: true });
+
+      try {
+        const response = await fetch(`${BASE_URL}/search/multi?query=${searchQuery}&include_adult=false&language=en-US&page=1`, fetchOptions);
+        const searchData = await response.json();
+
+        dispatch({ type: "searchResults/loaded", payload: searchData.results || [] });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        dispatch({ type: "loading", payload: false });
+      }
+    },
+    [dispatch]
+  );
+
+  return <MoviesContext.Provider value={{ isLoading, trendingMovies, genres, searchResults, searchMovies, dispatch }}>{children}</MoviesContext.Provider>;
 };
 
 export { MoviesProvider, MoviesContext };
