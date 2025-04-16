@@ -8,19 +8,23 @@ const URL = import.meta.env.VITE_IMAGE_URL;
 const MovieCard = ({ movie }) => {
   const { genres } = useMovies();
 
-  const currentMovieGenres = movie.genre_ids.map((id) => {
-    const genre = genres.find((g) => g.id === id);
-    return genre ? genre.name : "";
-  });
+  const currentMovieGenres = Array.isArray(movie.genre_ids)
+    ? movie.genre_ids.map((id) => {
+        const genre = genres.find((g) => g.id === id);
+        return genre ? genre.name : "N/A";
+      })
+    : [];
 
-  const imageURL = movie.backdrop_path === null || movie.poster_path === null ? "" : `${URL}/${movie.backdrop_path || movie.poster_path}`;
+  const imageURL = movie.backdrop_path || movie.poster_path ? `${URL}/${movie.backdrop_path || movie.poster_path}` : "/assets/images/no_image_found.png";
+
+  const releaseYear = movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A";
 
   return (
     <li className="w-full h-fit flex flex-col items-start justify-center gap-3">
       <div
         className="h-[370px] w-full bg-gray-400 bg-blend-multiply"
         style={{
-          backgroundImage: `url(${imageURL ? imageURL : "/assets/images/no_image_found.png"})`,
+          backgroundImage: `url(${imageURL})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}>
@@ -61,7 +65,7 @@ const MovieCard = ({ movie }) => {
         <div className="text-[#9CA3AF] font-bold text-[14px] flex gap-2 items-start w-full">
           {movie.origin_country && (
             <p className="flex items-center justify-center gap-0.5">
-              {movie.origin_country.length > 0
+              {movie.origin_country.length > 1
                 ? movie.origin_country.map((c, i) => (
                     <span key={i}>
                       {c}
@@ -71,7 +75,7 @@ const MovieCard = ({ movie }) => {
                 : movie.origin_country}
             </p>
           )}
-          <span>{movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A"}</span>
+          <span>{releaseYear}</span>
         </div>
 
         <h2 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h2>
