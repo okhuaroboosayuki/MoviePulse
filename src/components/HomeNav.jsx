@@ -1,10 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SearchInput from "./SearchInput";
 import Logo from "/assets/icons/tv.png";
 import { setDocumentOverFlow } from "../utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useDebounce from "../hooks/useDebounce";
 
-const HomeNav = ({ textColor, borderColor }) => {
+const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const debouncedSearchQuery = useDebounce(searchQuery);
+
   const handleMenuToggle = () => {
     const menuIcon = document.getElementById("mobileMenuIcon");
     const menu = document.getElementById("mobileMenu");
@@ -16,6 +22,17 @@ const HomeNav = ({ textColor, borderColor }) => {
 
       menuIcon.classList.contains("toggle-menu") && screenSizeLarge ? setDocumentOverFlow(false) : setDocumentOverFlow(true);
     }
+  };
+
+  const handleInputChange = (value) => {
+    setSearchQuery(value);
+  };
+
+  const handleSearchClick = () => {
+    const menuIcon = document.getElementById("mobileMenuIcon");
+    if (menuIcon.classList.contains("toggle-menu")) handleMenuToggle();
+
+    navigate(`/search?q=${debouncedSearchQuery}`);
   };
 
   useEffect(() => {
@@ -35,7 +52,14 @@ const HomeNav = ({ textColor, borderColor }) => {
         <span className={textColor}>MoviePulse</span>
       </Link>
 
-      <SearchInput className={`lg:w-[525px] md:w-[60%] w-full hidden md:flex border-2 ${borderColor} py-1.5 px-2.5 rounded-[6px] focus-within:border-gray-300`} textColor={textColor} />
+      <SearchInput
+        className={`lg:w-[525px] md:w-[60%] w-full hidden md:flex border-2 ${borderColor} py-1.5 px-2.5 rounded-[6px] focus-within:border-gray-300`}
+        textColor={textColor}
+        svgStrokeColor={svgStrokeColor}
+        searchQuery={searchQuery}
+        onChange={(e) => handleInputChange(e.target.value)}
+        onClick={handleSearchClick}
+      />
 
       <div className={`flex items-center gap-7 ${textColor}`}>
         <button className="capitalize font-bold lg:block hidden">sign in</button>
@@ -71,7 +95,14 @@ const HomeNav = ({ textColor, borderColor }) => {
               </Link>
             </li>
             <li className="w-full mt-10 md:hidden block">
-              <SearchInput className={"border h-12 w-full text-base p-2 rounded-md"} textColor={"text-[#333333]"} />
+              <SearchInput
+                className={"border h-12 w-full text-base p-2 rounded-md flex items-center"}
+                textColor={"text-[#333333]"}
+                svgStrokeColor={"#333333"}
+                searchQuery={searchQuery}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onClick={handleSearchClick}
+              />
             </li>
             <li className="w-full lg:hidden flex items-center">
               <Link to={"/"} className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">
