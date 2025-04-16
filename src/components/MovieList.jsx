@@ -1,27 +1,43 @@
 import { memo } from "react";
+import { Link } from "react-router-dom";
 import MovieCard from "./MovieCard";
 import rightArrow from "/assets/icons/right_icon.svg";
-import { Link } from "react-router-dom";
+import Message from "./Message";
+import useMovies from "../hooks/useMovies";
 
-const MovieList = memo(function MovieList({ movies, title, enableLink = false }) {
+const MovieList = memo(function MovieList({ movies, title, msgText, queryText, enableLink = false }) {
+  const { searchResults } = useMovies();
+  const totalNumberOfResults = searchResults.length;
+
   return (
     <div className="flex items-center justify-center flex-col w-full gap-4">
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-start gap-2 sm:gap-0 justify-between flex-col sm:flex-row w-full">
         <h1 className="font-bold md:text-4xl sm:text-2xl text-[20px] capitalize">{title}</h1>
 
         {enableLink && (
-          <Link to={"/featured-movies"} className="flex items-center justify-center gap-2">
+          <Link to={"featured-movies"} className="flex items-center justify-center gap-2">
             <span className="sm:text-lg text-base text-[#BE123C]">See more</span>
             <img src={rightArrow} alt="right arrow icon" />
           </Link>
         )}
+
+        {totalNumberOfResults > 0 && (
+          <p className="flex items-center justify-center gap-1 font-medium text-gray-500 sm:text-lg text-base">
+            <span className="capitalize">results for {queryText}: </span>
+            <span>{totalNumberOfResults} movies</span>
+          </p>
+        )}
       </div>
 
-      <ol className="grid 2xl:grid-cols-4 2xl:grid-row-4 lg:grid-cols-3 lg:grid-rows-3 md:grid-cols-2 md:grid-rows-2 gap-20 w-full place-items-start mt-11">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </ol>
+      {movies.length > 0 ? (
+        <ol className="grid 2xl:grid-cols-4 2xl:grid-row-4 lg:grid-cols-3 lg:grid-rows-3 md:grid-cols-2 md:grid-rows-2 gap-20 w-full place-items-start mt-11">
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </ol>
+      ) : (
+        <Message text={msgText} />
+      )}
     </div>
   );
 });
