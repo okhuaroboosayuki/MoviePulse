@@ -6,4 +6,3 @@ export { default as Message } from "./Message";
 export { default as MovieCard } from "./MovieCard";
 export { default as SideNav } from "./SideNav";
 export { default as Spinner } from "./Spinner";
-export { default as SingleMovie } from "./SingleMovie";

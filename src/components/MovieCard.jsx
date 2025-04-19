@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useMovies from "../hooks/useMovies";
 import { formatDate, truncateDecimals } from "../utils";
 import ImdbIcon from "/assets/icons/imdb_icon.svg";
@@ -5,7 +6,7 @@ import RottenIcon from "/assets/icons/rotten_tomatoes_icon.svg";
 
 const URL = import.meta.env.VITE_IMAGE_URL;
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, media }) => {
   const { genres } = useMovies();
 
   const currentMovieGenres = Array.isArray(movie.genre_ids)
@@ -19,6 +20,8 @@ const MovieCard = ({ movie }) => {
 
   const releaseYear = movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A";
 
+  const mediaType = movie.media_type ? (movie.media_type === "movie" ? "movie" : "tv-series") : media;
+
   return (
     <li className="w-full h-fit flex flex-col items-start justify-center gap-3">
       <div
@@ -29,7 +32,7 @@ const MovieCard = ({ movie }) => {
           backgroundSize: "cover",
         }}>
         <div className="w-full flex items-center justify-between pt-4 px-4">
-          <span className={movie.media_type === "tv" ? "py-[3px] px-2 rounded-xl uppercase bg-[#F3F4F680] text-[14px]" : ""}>{movie.media_type === "tv" ? `${movie.media_type} series` : ""}</span>
+          <span className={mediaType === "tv-series" ? "py-[3px] px-2 rounded-xl uppercase bg-[#F3F4F680] text-[14px]" : ""}>{mediaType === "tv-series" ? "tv series" : ""}</span>
 
           <span className="cursor-pointer">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +81,9 @@ const MovieCard = ({ movie }) => {
           <span>{releaseYear}</span>
         </div>
 
-        <h2 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h2>
+        <Link to={`/${mediaType}/${movie.id}`} className="w-fit">
+          <h2 className="text-[#111827] text-lg font-bold w-full">{movie.title || movie.name}</h2>
+        </Link>
 
         <div className="flex items-center justify-between md:w-full w-[250px] text-[#111827] text-[15px]">
           <p className="flex items-center justify-center gap-2.5  font-normal">
