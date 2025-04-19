@@ -1,5 +1,5 @@
-const TvIcon = ({ width, height, intensity }) => (
-  <svg fill="#000000" width="800px" height="800px" viewBox="0 -6 46 46" xmlns="http://www.w3.org/2000/svg" className={`fill-gray-${intensity}`} style={{ width: width, height: height }}>
+const TvIcon = ({ width, height, fillColor }) => (
+  <svg fill={fillColor} width="800px" height="800px" viewBox="0 -6 46 46" xmlns="http://www.w3.org/2000/svg" style={{ width: width, height: height }}>
     <path
       id="_24.TV"
       data-name="24.TV"

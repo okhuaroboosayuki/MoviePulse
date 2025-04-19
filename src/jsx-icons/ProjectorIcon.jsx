@@ -1,6 +1,6 @@
-const ProjectorIcon = ({ width, height, intensity }) => (
+const ProjectorIcon = ({ width, height, fillColor }) => (
   <svg
-    fill={"#000000"}
+    fill={fillColor}
     id="Layer_1"
     xmlns:x="&ns_extend;"
     xmlns:i="&ns_ai;"
@@ -12,7 +12,6 @@ const ProjectorIcon = ({ width, height, intensity }) => (
     viewBox="0 0 24 24"
     enableBackground="new 0 0 24 24"
     xmlSpace="preserve"
-    className={`fill-gray-${intensity}`}
     style={{ width: width, height: height }}>
     <metadata>
       <sfw xmlns="&ns_sfw;">

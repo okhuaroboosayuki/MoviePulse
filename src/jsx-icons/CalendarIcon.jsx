@@ -1,4 +1,4 @@
-const CalendarIcon = ({ width, height, intensity }) => (
+const CalendarIcon = ({ width, height, fillColor }) => (
   <svg
     id="Layer_1"
     xmlns:x="&ns_extend;"
@@ -11,12 +11,12 @@ const CalendarIcon = ({ width, height, intensity }) => (
     viewBox="0 0 24 24"
     enableBackground="new 0 0 24 24"
     xmlSpace="preserve"
-    className={`fill-gray-${intensity}`}
+    fill={fillColor}
     style={{ width: width, height: height }}>
     <metadata>
       <sfw xmlns="&ns_sfw;">
         <slices />
-        <sliceSourceBounds width={505} height={984} bottomLeftOrigin="true" x={0} y={-984} />
+        <sliceSourceBounds width={505} height={984} bottomleftorigin="true" x={0} y={-984} />
       </sfw>
     </metadata>
     <g>
