@@ -1,9 +1,11 @@
 const Footer = () => {
-  const backToTopBtn = document.getElementById("backToTop");
+  document.addEventListener("DOMContentLoaded", () => {
+    const backToTopBtn = document.getElementById("backToTop");
 
-  window.onscroll = function () {
-    document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000 ? (backToTopBtn.style.display = "block") : (backToTopBtn.style.display = "none");
-  };
+    window.onscroll = function () {
+      document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000 ? (backToTopBtn.style.display = "block") : (backToTopBtn.style.display = "none");
+    };
+  });
 
   const handleBackToTop = () => {
     window.scrollTo({

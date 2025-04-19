@@ -4,12 +4,13 @@ import RottenIcon from "/assets/icons/rotten_tomatoes_icon.svg";
 import useMovies from "../hooks/useMovies";
 import { truncateDecimals } from "../utils";
 
+import { Link } from "react-router-dom";
 import { Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css";
 
 const URL = import.meta.env.VITE_IMAGE_URL;
 
@@ -43,6 +44,7 @@ const SwiperCarousel = () => {
       {!isLoading &&
         slicedData.map((movie) => {
           const imageURL = `${URL}/${movie.backdrop_path}`;
+          const mediaType = movie.media_type === "movie" ? "movie" : "tv-series";
 
           return (
             <SwiperSlide key={movie.id}>
@@ -70,10 +72,10 @@ const SwiperCarousel = () => {
 
                   <p className="text-white font-medium text-center sm:text-start text-balance sm:text-base text-[15px]">{movie.overview}</p>
 
-                  <button className="flex items-center gap-2 bg-[#BE123C] py-3 px-6 text-white rounded-md text-[15px] sm:text-base">
+                  <Link to={`/${mediaType}/${movie.id}`} className="flex items-center gap-2 bg-[#BE123C] py-3 px-6 text-white rounded-md text-[15px] sm:text-base">
                     <img src={PlayIcon} alt="Play icon" />
                     <span className="uppercase font-bold">watch trailer</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>

@@ -16,7 +16,7 @@ const ProjectorIcon = ({ width, height, fillColor }) => (
     <metadata>
       <sfw xmlns="&ns_sfw;">
         <slices />
-        <sliceSourceBounds width={505} height={984} bottomLeftOrigin="true" x={0} y={-120} />
+        <sliceSourceBounds width={505} height={984} bottomleftorigin="true" x={0} y={-120} />
       </sfw>
     </metadata>
     <g>
