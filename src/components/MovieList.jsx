@@ -1,13 +1,13 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MovieCard from "./MovieCard";
 import rightArrow from "/assets/icons/right_icon.svg";
 import Message from "./Message";
-import useMovies from "../hooks/useMovies";
 
 const MovieList = memo(function MovieList({ movies, title, msgText, queryText, enableLink = false }) {
-  const { searchResults } = useMovies();
-  const totalNumberOfResults = searchResults.length;
+  const totalNumberOfResults = movies.length;
+  const location = useLocation();
+  const isLocationSearch = location.pathname === "/search";
 
   return (
     <div className="flex items-center justify-center flex-col w-full gap-4">
@@ -21,9 +21,11 @@ const MovieList = memo(function MovieList({ movies, title, msgText, queryText, e
           </Link>
         )}
 
-        {totalNumberOfResults > 0 && (
+        {isLocationSearch && totalNumberOfResults > 0 && (
           <p className="flex items-center justify-center gap-1 font-medium text-gray-500 sm:text-lg text-base">
-            <span className="capitalize">results for {queryText}: </span>
+            <p className="capitalize">
+              results for <span className="lowercase">{queryText}</span>:
+            </p>
             <span>{totalNumberOfResults} movies</span>
           </p>
         )}

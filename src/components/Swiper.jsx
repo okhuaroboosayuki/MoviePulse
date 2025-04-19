@@ -53,10 +53,10 @@ const SwiperCarousel = () => {
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}>
-                <div className="sm:w-[404px] w-full xl:ml-25 lg:ml-15 sm:ml-10 px-10 flex flex-col sm:items-start items-center justify-center gap-6">
-                  <h1 className="text-white text-5xl font-bold text-center sm:text-start">{movie.title || movie.name}</h1>
+                <div className="sm:w-[604px] w-full xl:ml-25 lg:ml-15 sm:ml-10 px-9 flex flex-col sm:items-start items-center justify-center gap-6">
+                  <h1 className="text-white sm:text-5xl text-3xl font-bold text-center sm:text-start">{movie.title || movie.name}</h1>
 
-                  <div className="flex items-center justify-center gap-10">
+                  <div className="flex items-center justify-center gap-10 text-[15px] sm:text-base">
                     <p className="flex items-center justify-center gap-2.5 text-white font-normal">
                       <img src={ImdbIcon} alt="IMDB icon" />
                       <span>{truncateDecimals(movie.vote_average * 10, 1)} / 100</span>
@@ -68,9 +68,9 @@ const SwiperCarousel = () => {
                     </p>
                   </div>
 
-                  <p className="text-white font-medium text-center sm:text-start text-balance">{movie.overview}</p>
+                  <p className="text-white font-medium text-center sm:text-start text-balance sm:text-base text-[15px]">{movie.overview}</p>
 
-                  <button className="flex items-center gap-2 bg-[#BE123C] py-3 px-6 text-white rounded-md">
+                  <button className="flex items-center gap-2 bg-[#BE123C] py-3 px-6 text-white rounded-md text-[15px] sm:text-base">
                     <img src={PlayIcon} alt="Play icon" />
                     <span className="uppercase font-bold">watch trailer</span>
                   </button>
