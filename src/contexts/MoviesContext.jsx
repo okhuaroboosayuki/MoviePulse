@@ -18,6 +18,9 @@ const initialState = {
   trendingMovies: [],
   genres: [],
   searchResults: [],
+  allMovies: [],
+  allTvSeries: [],
+  upcomingMovies: [],
 };
 
 const reducer = (state, action) => {
@@ -42,13 +45,28 @@ const reducer = (state, action) => {
         ...state,
         searchResults: action.payload,
       };
+    case "movies/loaded":
+      return {
+        ...state,
+        allMovies: action.payload,
+      };
+    case "series/loaded":
+      return {
+        ...state,
+        allTvSeries: action.payload,
+      };
+    case "upcoming/loaded":
+      return {
+        ...state,
+        upcomingMovies: action.payload,
+      };
     default:
       return state;
   }
 };
 
 const MoviesProvider = ({ children }) => {
-  const [{ isLoading, trendingMovies, genres, searchResults }, dispatch] = useReducer(reducer, initialState);
+  const [{ ...state }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -102,7 +120,55 @@ const MoviesProvider = ({ children }) => {
     [dispatch]
   );
 
-  return <MoviesContext.Provider value={{ isLoading, trendingMovies, genres, searchResults, searchMovies, dispatch }}>{children}</MoviesContext.Provider>;
+  const fetchMovies = useCallback(async () => {
+    dispatch({ type: "loading", payload: true });
+
+    try {
+      const response = await fetch(`${BASE_URL}/movie/popular?language=en-US&page=1`, fetchOptions);
+      const moviesData = await response.json();
+
+      dispatch({ type: "movies/loaded", payload: moviesData.results || [] });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      dispatch({ type: "loading", payload: false });
+    }
+  }, [dispatch]);
+
+  const fetchSeries = useCallback(async () => {
+    dispatch({ type: "loading", payload: true });
+
+    try {
+      const response = await fetch(`${BASE_URL}/tv/popular?language=en-US&page=1`, fetchOptions);
+      const tvSeriesData = await response.json();
+
+      dispatch({ type: "series/loaded", payload: tvSeriesData.results || [] });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      dispatch({ type: "loading", payload: false });
+    }
+  }, [dispatch]);
+
+  const fetchUpcomingMovies = useCallback(
+    async (region) => {
+      dispatch({ type: "loading", payload: true });
+
+      try {
+        const response = await fetch(`${BASE_URL}/movie/upcoming?language=en-US&page=1&region=${region}`, fetchOptions);
+        const upcomingMoviesData = await response.json();
+
+        dispatch({ type: "upcoming/loaded", payload: upcomingMoviesData.results || [] });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        dispatch({ type: "loading", payload: false });
+      }
+    },
+    [dispatch]
+  );
+
+  return <MoviesContext.Provider value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, dispatch }}>{children}</MoviesContext.Provider>;
 };
 
 export { MoviesProvider, MoviesContext };
