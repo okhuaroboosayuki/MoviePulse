@@ -4,8 +4,12 @@ import { Spinner } from "./components";
 import { MoviesProvider } from "./contexts/MoviesContext";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const SingleMoviePage = lazy(() => import("./pages/SingleMoviePage"));
 const FeaturedMovies = lazy(() => import("./pages/FeaturedMovies"));
+const MoviesPage = lazy(() => import("./pages/MoviesPage"));
+const TvSeriesPage = lazy(() => import("./pages/TvSeriesPage"));
+const Upcoming = lazy(() => import("./pages/UpcomingPage"));
+const SingleTvSeriesPage = lazy(() => import("./pages/SingleTvSeriesPage"));
+const SingleMoviePage = lazy(() => import("./pages/SingleMoviePage"));
 const SearchPage = lazy(() => import("./pages/SearchPage"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 
@@ -16,9 +20,15 @@ const App = () => {
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="movie" element={<SingleMoviePage />} />
             <Route path="featured-movies" element={<FeaturedMovies />} />
             <Route path="search" element={<SearchPage />} />
+            <Route path="movies" element={<MoviesPage />} />
+            <Route path="tv-series" element={<TvSeriesPage />} />
+            <Route path="upcoming" element={<Upcoming />} />
+
+            <Route path="movie/:id" element={<SingleMoviePage />} />
+            <Route path="tv-series/:id" element={<SingleTvSeriesPage />} />
+
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Suspense>
