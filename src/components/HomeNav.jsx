@@ -80,17 +80,17 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
           id="mobileMenu">
           <ol className="flex flex-col items-start justify-start gap-6 capitalize mt-20 md:mt-0">
             <li className="border-b w-full">
-              <Link to={"/"} className="hover:text-[#BE123C]">
+              <Link to={"/movies"} className="hover:text-[#BE123C]">
                 movies
               </Link>
             </li>
             <li className="border-b w-full">
-              <Link to={"/"} className="hover:text-[#BE123C]">
+              <Link to={"/tv-series"} className="hover:text-[#BE123C]">
                 tv series
               </Link>
             </li>
             <li className="border-b w-full">
-              <Link to={"/"} className="hover:text-[#BE123C]">
+              <Link to={"/upcoming"} className="hover:text-[#BE123C]">
                 upcoming
               </Link>
             </li>
