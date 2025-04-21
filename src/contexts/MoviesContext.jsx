@@ -21,6 +21,8 @@ const initialState = {
   allMovies: [],
   allTvSeries: [],
   upcomingMovies: [],
+  currentMovie: {},
+  currentSeries: {},
 };
 
 const reducer = (state, action) => {
@@ -59,6 +61,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         upcomingMovies: action.payload,
+      };
+    case "singleMovie/loaded":
+      return {
+        ...state,
+        currentMovie: action.payload,
+      };
+    case "singleSeries/loaded":
+      return {
+        ...state,
+        currentSeries: action.payload,
       };
     default:
       return state;
@@ -168,7 +180,25 @@ const MoviesProvider = ({ children }) => {
     [dispatch]
   );
 
-  return <MoviesContext.Provider value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, dispatch }}>{children}</MoviesContext.Provider>;
+  const fetchSingleMovie = useCallback(
+    async (id) => {
+      dispatch({ type: "loading", payload: true });
+
+      try {
+        const response = await fetch(`${BASE_URL}/movie/${id}?append_to_response=videos,credits,similar&language=en-US`, fetchOptions);
+        const currentMovieData = await response.json();
+
+        dispatch({ type: "singleMovie/loaded", payload: currentMovieData || {} });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        dispatch({ type: "loading", payload: false });
+      }
+    },
+    [dispatch]
+  );
+
+  return <MoviesContext.Provider value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, fetchSingleMovie, dispatch }}>{children}</MoviesContext.Provider>;
 };
 
 export { MoviesProvider, MoviesContext };

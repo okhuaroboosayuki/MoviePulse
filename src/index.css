@@ -64,6 +64,27 @@
     -webkit-appearance: none;
     appearance: none;
   }
+
+  .react-player {
+    @apply w-full! mt-5 h-[449px]!;
+  }
+
+  .react-player__preview {
+    @apply cursor-auto!;
+  }
+
+  .react-player img {
+    @apply h-[449px]! w-full! object-cover rounded-[20px]! bg-center bg-cover;
+  }
+
+  .react-player__shadow {
+    @apply bg-[#ffffff]/40! border-2! border-[#E8E8E833]/20! cursor-pointer! z-10!;
+  }
+
+  .ytp-cued-thumbnail-overlay-image,
+  .react-player iframe {
+    @apply rounded-[20px]!;
+  }
 }
 
 @layer utilities {

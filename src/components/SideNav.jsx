@@ -13,13 +13,13 @@ const SideNav = ({ pathLocation }) => {
   const isActivePath = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 flex flex-col item-center py-8 pl-8 gap-13 border-r border-r-gray-400 rounded-tr-[4%] rounded-br-[4%]">
-      <div className="flex items-center gap-3 lg:gap-6 text-lg lg:text-2xl font-bold pr-10">
+    <nav className="fixed top-0 left-0 bg-white flex flex-col item-center py-8 gap-18 border-r border-r-gray-400 rounded-tr-[4%] rounded-br-[4%] z-10">
+      <div className="flex items-center gap-3 lg:gap-6 text-lg lg:text-2xl font-bold pl-8">
         <img src={Logo} alt="MoviePulse's logo" />
         <span className="text-[#333333] text-2xl">MoviePulse</span>
       </div>
 
-      <ol className="flex flex-col w-full items-start justify-center gap-9.5 ">
+      <ol className="flex flex-col w-full items-start justify-center gap-5.5">
         <CustomNavLink to={"/"}>
           <HomeIcon width={"25px"} height={"25px"} fillColor="#808080" />
           <span>home</span>
@@ -38,13 +38,13 @@ const SideNav = ({ pathLocation }) => {
         </CustomNavLink>
       </ol>
 
-      <div className="border border-[#BE123CB2] rounded-[20px] px-4 pt-10.5 pb-5.5 flex items-start gap-2 flex-col mr-10">
+      <div className="border border-[#BE123CB2] rounded-[20px] px-4 pt-10.5 pb-5.5 flex items-start gap-2 flex-col mx-10">
         <p className="w-[137px] text-[15px] text-[#333333CC] font-semibold">Play movie quizes and earn free tickets</p>
         <p className="text-[#666666] text-xs w-[139px] font-medium">50k people are playing now</p>
         <button className="border border-[#BE123C33] bg-[#BE123C33] self-center rounded-[30px] py-1.5 px-4 text-[#BE123C] text-xs font-medium cursor-pointer">Start playing</button>
       </div>
 
-      <button className="flex item-center gap-2.5 px-4 text-[#666666] text-xl font-semibold cursor-pointer">
+      <button className="flex item-center gap-2.5 px-4 text-[#666666] text-xl font-semibold cursor-pointer ml-10 -mt-6">
         <LogoutIcon width={"25px"} height={"25px"} fillColor="#808080" />
         <span>Log out</span>
       </button>
