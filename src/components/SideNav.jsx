@@ -13,7 +13,7 @@ const SideNav = ({ pathLocation }) => {
   const isActivePath = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 bg-white flex flex-col item-center py-8 gap-18 border-r border-r-gray-400 rounded-tr-[4%] rounded-br-[4%] z-10">
+    <nav className="fixed top-0 left-0 bg-white flex flex-col item-center py-8 gap-18 border-r h-screen border-r-gray-400 rounded-tr-[4%] rounded-br-[4%] z-10">
       <div className="flex items-center gap-3 lg:gap-6 text-lg lg:text-2xl font-bold pl-8">
         <img src={Logo} alt="MoviePulse's logo" />
         <span className="text-[#333333] text-2xl">MoviePulse</span>
