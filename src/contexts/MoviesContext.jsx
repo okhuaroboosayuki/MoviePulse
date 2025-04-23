@@ -15,6 +15,7 @@ const MoviesContext = createContext();
 
 const initialState = {
   isLoading: false,
+  isNavHidden: false,
   trendingMovies: [],
   genres: [],
   searchResults: [],
@@ -31,6 +32,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         isLoading: action.payload,
+      };
+    case "navHidden":
+      return {
+        ...state,
+        isNavHidden: action.payload,
       };
     case "trending/loaded":
       return {
@@ -216,7 +222,15 @@ const MoviesProvider = ({ children }) => {
     [dispatch]
   );
 
-  return <MoviesContext.Provider value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, fetchSingleMovie, fetchSingleSeries, dispatch }}>{children}</MoviesContext.Provider>;
+  const handleNavDisplay = () => {
+    dispatch({ type: "navHidden", payload: !state.isNavHidden });
+  };
+
+  return (
+    <MoviesContext.Provider value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, fetchSingleMovie, fetchSingleSeries, handleNavDisplay, dispatch }}>
+      {children}
+    </MoviesContext.Provider>
+  );
 };
 
 export { MoviesProvider, MoviesContext };

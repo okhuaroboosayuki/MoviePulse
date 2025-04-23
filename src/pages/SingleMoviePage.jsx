@@ -12,7 +12,6 @@ const SingleMoviePage = () => {
   useEffect(() => {
     fetchSingleMovie(id);
   }, [fetchSingleMovie, id]);
-  console.log(currentMovie);
 
   return (
     <section className="flex w-full items-center h-full relative">
