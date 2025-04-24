@@ -12,13 +12,18 @@ const MoviesPage = () => {
   const sortedMovies = (Array.isArray(allMovies) ? allMovies : []).sort((a, b) => b.vote_average - a.vote_average);
 
   return (
-    <div className="flex items-center justify-center h-full flex-col w-full lg:px-15 xl:px-27 sm:px-8 px-3">
-      <HomeNav textColor={"text-[#111827]"} borderColor={"border-[#111827]/50"} svgStrokeColor={"#111827"} />
+    <>
+      <title>Popular Movies | MoviePulse</title>
+      <meta name="description" content="Explore the best popular movies from various genres on MoviePulse. Find top-rated films, watch trailers, and dive into an incredible cinematic experience" />
 
-      <div className="mt-13 w-full">{isLoading ? <Spinner /> : <MovieList movies={sortedMovies} title="movies" media="movie" />}</div>
+      <div className="flex items-center justify-center h-full flex-col w-full lg:px-15 xl:px-27 sm:px-8 px-3">
+        <HomeNav textColor={"text-[#111827]"} borderColor={"border-[#111827]/50"} svgStrokeColor={"#111827"} />
 
-      <Footer />
-    </div>
+        <div className="mt-13 w-full">{isLoading ? <Spinner /> : <MovieList movies={sortedMovies} title="movies" media="movie" />}</div>
+
+        <Footer />
+      </div>
+    </>
   );
 };
 

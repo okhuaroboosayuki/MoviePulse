@@ -11,6 +11,18 @@ const SearchPage = () => {
 
   useEffect(() => {
     searchMovies(query);
+
+    document.title = query ? `Search Results for “${query}” | MoviePulse` : "MoviePulse";
+
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute(
+        "content",
+        query
+          ? `Explore MoviePulse’s search results for “${query}”—browse matching movies and TV shows by rating, watch trailers, and discover your next favorite title.`
+          : "Discover trending, top-rated & upcoming movies and TV series on MoviePulse."
+      );
+    }
   }, [query, searchMovies]);
 
   const sortedSearchResults = (Array.isArray(searchResults) ? searchResults : []).sort((a, b) => b.vote_average - a.vote_average);

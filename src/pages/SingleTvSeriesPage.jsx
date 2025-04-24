@@ -13,6 +13,8 @@ const SingleTvSeriesPage = () => {
     fetchSingleSeries(id);
   }, [fetchSingleSeries, id]);
 
+  console.log(currentSeries);
+
   useEffect(() => {
     const onResizeNavDisplay = () => {
       if (window.innerWidth < 1440) dispatch({ type: "navHidden", payload: true });
@@ -22,6 +24,15 @@ const SingleTvSeriesPage = () => {
 
     return () => window.removeEventListener("resize", onResizeNavDisplay);
   }, [dispatch]);
+
+  useEffect(() => {
+    document.title = currentSeries ? `${currentSeries.name} ${currentSeries.first_air_date?.slice(0, 4)} | MoviePulse` : "MoviePulse";
+
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute("content", `Dive into the details of "${currentSeries.name}", Discover the plot, cast, and more about this captivating TV series on MoviePulse.`);
+    }
+  }, [currentSeries]);
 
   return (
     <section className="flex w-full items-center h-full">

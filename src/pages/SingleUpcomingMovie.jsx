@@ -4,7 +4,7 @@ import { MovieDetails, SideNav, Spinner } from "../components";
 import useMovies from "../hooks/useMovies";
 
 const SingleUpcomingMovie = () => {
-  const { isLoading, currentUpcomingMovie, fetchSingleUpcomingMovie } = useMovies();
+  const { isLoading, currentUpcomingMovie, fetchSingleUpcomingMovie, dispatch } = useMovies();
 
   const location = useLocation();
   const { id } = useParams();
@@ -12,6 +12,25 @@ const SingleUpcomingMovie = () => {
   useEffect(() => {
     fetchSingleUpcomingMovie(id);
   }, [fetchSingleUpcomingMovie, id]);
+
+  useEffect(() => {
+    const onResizeNavDisplay = () => {
+      if (window.innerWidth < 1440) dispatch({ type: "navHidden", payload: true });
+      if (window.innerWidth >= 1440) dispatch({ type: "navHidden", payload: false });
+    };
+    window.addEventListener("resize", onResizeNavDisplay);
+
+    return () => window.removeEventListener("resize", onResizeNavDisplay);
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.title = currentUpcomingMovie ? `${currentUpcomingMovie.title}; Coming Soon | MoviePulse` : "MoviePulse";
+
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute("content", `Get a sneak peek of "${currentUpcomingMovie.title}", coming soon. Explore the storyline, cast, release date, and more about this anticipated movie on MoviePulse.`);
+    }
+  }, [currentUpcomingMovie]);
 
   return (
     <section className="flex w-full items-center h-full">
