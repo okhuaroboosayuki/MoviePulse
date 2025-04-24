@@ -1,11 +1,23 @@
-const Footer = () => {
-  document.addEventListener("DOMContentLoaded", () => {
-    const backToTopBtn = document.getElementById("backToTop");
+import { useEffect } from "react";
 
-    window.onscroll = function () {
-      document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000 ? (backToTopBtn.style.display = "block") : (backToTopBtn.style.display = "none");
+const Footer = () => {
+  useEffect(() => {
+    const btn = document.getElementById("backToTop");
+    if (!btn) return;
+
+    btn.style.display = "none";
+
+    const onScroll = () => {
+      if (window.scrollY > 700) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
     };
-  });
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleBackToTop = () => {
     window.scrollTo({
