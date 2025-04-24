@@ -24,6 +24,7 @@ const initialState = {
   upcomingMovies: [],
   currentMovie: {},
   currentSeries: {},
+  currentUpcomingMovie: {},
 };
 
 const reducer = (state, action) => {
@@ -77,6 +78,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         currentSeries: action.payload,
+      };
+    case "singleUpcomingMovie/loaded":
+      return {
+        ...state,
+        currentUpcomingMovie: action.payload,
       };
     default:
       return state;
@@ -157,7 +163,7 @@ const MoviesProvider = ({ children }) => {
     dispatch({ type: "loading", payload: true });
 
     try {
-      const response = await fetch(`${BASE_URL}/tv/popular?language=en-US&page=1`, fetchOptions);
+      const response = await fetch(`${BASE_URL}/tv/top_rated?language=en-US&page=1`, fetchOptions);
       const tvSeriesData = await response.json();
 
       dispatch({ type: "series/loaded", payload: tvSeriesData.results || [] });
@@ -222,12 +228,31 @@ const MoviesProvider = ({ children }) => {
     [dispatch]
   );
 
+  const fetchSingleUpcomingMovie = useCallback(
+    async (id) => {
+      dispatch({ type: "loading", payload: true });
+
+      try {
+        const response = await fetch(`${BASE_URL}/movie/${id}?append_to_response=videos,credits,similar&language=en-US`, fetchOptions);
+        const currentUpcomingMovieData = await response.json();
+
+        dispatch({ type: "singleUpcomingMovie/loaded", payload: currentUpcomingMovieData || {} });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        dispatch({ type: "loading", payload: false });
+      }
+    },
+    [dispatch]
+  );
+
   const handleNavDisplay = () => {
     dispatch({ type: "navHidden", payload: !state.isNavHidden });
   };
 
   return (
-    <MoviesContext.Provider value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, fetchSingleMovie, fetchSingleSeries, handleNavDisplay, dispatch }}>
+    <MoviesContext.Provider
+      value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, fetchSingleMovie, fetchSingleSeries, fetchSingleUpcomingMovie, handleNavDisplay, dispatch }}>
       {children}
     </MoviesContext.Provider>
   );

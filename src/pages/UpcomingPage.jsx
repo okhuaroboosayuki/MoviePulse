@@ -9,7 +9,7 @@ const UpcomingPage = () => {
     fetchUpcomingMovies("us");
   }, [fetchUpcomingMovies]);
 
-  const sortedUpcomingMovies = (Array.isArray(upcomingMovies) ? upcomingMovies : []).sort((a, b) => b.vote_average - a.vote_average);
+  const sortedUpcomingMovies = upcomingMovies.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
 
   return (
     <div className="flex items-center justify-center h-full flex-col w-full lg:px-15 xl:px-27 sm:px-8 px-3">

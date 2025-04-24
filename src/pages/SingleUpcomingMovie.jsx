@@ -1,14 +1,23 @@
-import { useLocation } from "react-router-dom";
-import { SideNav } from "../components";
+import { useLocation, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { MovieDetails, SideNav, Spinner } from "../components";
+import useMovies from "../hooks/useMovies";
 
 const SingleUpcomingMovie = () => {
+  const { isLoading, currentUpcomingMovie, fetchSingleUpcomingMovie } = useMovies();
+
   const location = useLocation();
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchSingleUpcomingMovie(id);
+  }, [fetchSingleUpcomingMovie, id]);
 
   return (
     <section className="flex w-full items-center h-full">
       <SideNav pathLocation={location} />
 
-      <section>single upcoming</section>
+      {isLoading ? <Spinner /> : <MovieDetails movie={currentUpcomingMovie} pathLocation={location} />}
     </section>
   );
 };

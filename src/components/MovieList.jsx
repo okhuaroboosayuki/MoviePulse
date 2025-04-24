@@ -11,7 +11,7 @@ const MovieList = memo(function MovieList({ movies, title, msgText, queryText, e
 
   return (
     <div className="flex items-center justify-center flex-col w-full gap-4">
-      <div className="flex items-start gap-2 sm:gap-0 justify-between flex-col sm:flex-row w-full">
+      <div className={`flex items-center gap-2 sm:gap-0 justify-between ${(queryText || isLocationSearch) && totalNumberOfResults > 0 && "flex-col sm:flex-row"} w-full`}>
         <h1 className="font-bold md:text-4xl sm:text-2xl text-[20px] capitalize">{title}</h1>
 
         {enableLink && (

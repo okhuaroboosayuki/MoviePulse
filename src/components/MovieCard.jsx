@@ -16,7 +16,7 @@ const MovieCard = ({ movie, media }) => {
       })
     : [];
 
-  const imageURL = movie.backdrop_path || movie.poster_path ? `${URL}/${movie.backdrop_path || movie.poster_path}` : "/assets/images/no_image_found.png";
+  const imageURL = movie.poster_path ? `${URL}/${movie.poster_path}` : "/assets/images/no_image_found.png";
 
   const releaseYear = movie.first_air_date ? formatDate(movie.first_air_date, "yyyy") : movie.release_date ? formatDate(movie.release_date, "yyyy") : "N/A";
 

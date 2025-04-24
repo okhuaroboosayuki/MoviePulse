@@ -22,16 +22,17 @@ const MovieDetails = ({ movie, pathLocation }) => {
 
   const dynamicPath = isMovie ? "movie" : isTvSeries ? "tv-series" : "upcoming";
 
-  const movieTitle = dynamicPath === "movie" ? movie?.title : movie?.name;
-  const movieReleaseDate = dynamicPath === "movie" ? movie?.release_date : movie?.first_air_date;
+  const movieTitle = dynamicPath === "movie" ? movie?.title : dynamicPath === "tv-series" ? movie?.name : movie?.title;
+  const movieReleaseDate = dynamicPath === "movie" || dynamicPath === "upcoming" ? movie?.release_date : movie?.first_air_date;
 
   const movieCast = movie?.credits?.cast || [];
   const movieCrew = movie?.credits?.crew || [];
 
   const director_or_producer =
-    dynamicPath === "movie"
+    dynamicPath === "movie" || dynamicPath === "upcoming"
       ? movieCrew?.filter((crew) => crew.department === "Directing").filter((director) => director.job === "Director")
       : movieCrew?.filter((crew) => crew.department === "Production").filter((producer) => producer.job === "Executive Producer");
+  const directors_or_producers_tag = dynamicPath === "movie" || dynamicPath === "upcoming" ? "Director(s)" : "Executive Producer(s)";
 
   const writers = dynamicPath === "movie" ? movieCrew?.filter((crew) => crew.department === "Writing") : movieCrew?.filter((crew) => crew.known_for_department === "Writing");
   const filteredWriters = writers.find((writer) => writer.job === "Story") ? writers.filter((writer) => writer.job === "Story") : writers;
@@ -77,9 +78,9 @@ const MovieDetails = ({ movie, pathLocation }) => {
             <div className="flex items-center gap-4 lg:gap-8 flex-wrap">
               <p className="flex flex-wrap items-center md:justify-center gap-2 text-xl sm:text-[23px] w-fit text-[#404040] font-medium">
                 <span title="Movie title">{movieTitle}</span>
-                <span title="Release date">{`• ${movieReleaseDate ? formatDate(movieReleaseDate, "yyyy") : "N/A"} •`}</span>
+                <span title="Release date">{`• ${movieReleaseDate ? (dynamicPath === "upcoming" ? formatDate(movieReleaseDate, "dd-mm-yyyy") : formatDate(movieReleaseDate, "yyyy")) : "N/A"} •`}</span>
                 <span title="Motion Picture Association Rating">{movie?.adult === false ? "PG-13" : "PG"}</span>
-                <span title="Runtime">{movie?.runtime && `• ${formatRuntime(movie?.runtime)}`}</span>
+                <span title="Runtime">{movie?.runtime === 0 ? "" : `• ${formatRuntime(movie?.runtime)}`}</span>
               </p>
 
               <p className="flex sm:items-center flex-wrap sm:justify-center sm:gap-1 gap-2 text-[#B91C1C] text-[15px] font-medium capitalize">
@@ -93,7 +94,8 @@ const MovieDetails = ({ movie, pathLocation }) => {
 
             {/* rating */}
             <div className="flex items-center justify-end gap-1 text-lg sm:text-xl text-[#666666] font-medium">
-              <img src={StarIcon} width={25} /> <span title="Average ratings">{truncateDecimals(movie?.vote_average, 1)}</span> | <span title="Popularity">{formatNumber(movie?.popularity)}</span>
+              <img src={StarIcon} width={25} /> <span title="Average ratings">{truncateDecimals(Number(movie?.vote_average), 1)}</span> |{" "}
+              <span title="Popularity">{formatNumber(movie?.popularity)}</span>
             </div>
           </div>
 
@@ -101,12 +103,12 @@ const MovieDetails = ({ movie, pathLocation }) => {
           <div className="flex xl:flex-row flex-col xl:items-center items-start gap-5 w-full">
             <div className="flex flex-col gap-5">
               {/* overview */}
-              <p className="lg:w-[674px] text- text-justify w-full text-lg sm:text-xl text-[#333333]">{movie.overview}</p>
+              <p className="xl:w-[674px] text- text-justify w-full text-lg sm:text-xl text-[#333333]">{movie.overview}</p>
 
               {/* cast */}
               <div className="flex flex-col flex-wrap text-[#333333] text-lg sm:text-xl gap-7 w-full">
                 <p className="flex flex-wrap items-center justify-start gap-1.5 w-full">
-                  {dynamicPath === "movie" ? "Director(s)" : "Executive Producer(s)"}:{" "}
+                  {directors_or_producers_tag}:{" "}
                   {director_or_producer.length < 1 ? (
                     <span className="text-[#BE123C] capitalize">data unavailable</span>
                   ) : (
@@ -156,13 +158,13 @@ const MovieDetails = ({ movie, pathLocation }) => {
             {/* showtimes */}
             <div className="flex flex-col md:items-start xl:items-stretch self-start gap-8 w-full">
               <div className="flex flex-col gap-3 text-lg sm:text-xl">
-                <div className="bg-[#BE123C] py-3.5 sm:px-19.5 rounded-[10px] flex items-center justify-center gap-2.5 text-white capitalize cursor-pointer" role="button">
+                <div className="bg-[#BE123C] py-3.5 sm:px-19.5 xl:px-0 rounded-[10px] flex items-center justify-center gap-2.5 text-white capitalize cursor-pointer" role="button">
                   <img src={TicketsIcon} alt="tickets icon" />
                   <span>see showtimes</span>
                 </div>
 
                 <div
-                  className="bg-[#BE123C]/10 border border-[#BE123C] py-3.5 sm:px-19.5 rounded-[10px] flex items-center justify-center gap-2.5 text-[#333333] capitalize cursor-pointer"
+                  className="bg-[#BE123C]/10 border border-[#BE123C] py-3.5 sm:px-19.5 xl:px-0 rounded-[10px] flex items-center justify-center gap-2.5 text-[#333333] capitalize cursor-pointer"
                   role="button">
                   <img src={ListIcon} alt="tickets icon" />
                   <span>more watch options</span>
