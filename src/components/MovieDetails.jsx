@@ -57,7 +57,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
           />
         </div>
       ) : (
-        <section
+        <div
           className="h-[449px] w-full bg-gray-400 bg-blend-multiply rounded-[20px] flex items-center justify-center"
           style={{
             backgroundImage: `url(${imageURL})`,
@@ -68,7 +68,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
           <div className="bg-[#ffffff]/70 border-2 border-[#E8E8E833]/20 p-4 rounded-md">
             <p className="text-lg text-[#000000] font-semibold capitalize">no trailer available</p>
           </div>
-        </section>
+        </div>
       )}
 
       <section className="flex items-start justify-between px-5 py-7 gap-4">
@@ -103,7 +103,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
           <div className="flex xl:flex-row flex-col xl:items-center items-start gap-5 w-full">
             <div className="flex flex-col gap-5">
               {/* overview */}
-              <p className="xl:w-[674px] text- text-justify w-full text-lg sm:text-xl text-[#333333]">{movie.overview}</p>
+              <p className="xl:w-[674px] text-justify w-full text-lg sm:text-xl text-[#333333]">{movie.overview}</p>
 
               {/* cast */}
               <div className="flex flex-col flex-wrap text-[#333333] text-lg sm:text-xl gap-7 w-full">
