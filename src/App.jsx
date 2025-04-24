@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Spinner } from "./components";
 import { MoviesProvider } from "./contexts/MoviesContext";
+import PageNotFound from "./pages/PageNotFound";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FeaturedMovies = lazy(() => import("./pages/FeaturedMovies"));
@@ -9,7 +10,6 @@ const SearchPage = lazy(() => import("./pages/SearchPage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
 const TvSeriesPage = lazy(() => import("./pages/TvSeriesPage"));
 const Upcoming = lazy(() => import("./pages/UpcomingPage"));
-const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 
 const SingleTvSeriesPage = lazy(() => import("./pages/SingleTvSeriesPage"));
 const SingleMoviePage = lazy(() => import("./pages/SingleMoviePage"));
