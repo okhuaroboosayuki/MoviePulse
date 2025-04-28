@@ -113,7 +113,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
                     <span className="text-[#BE123C] capitalize">data unavailable</span>
                   ) : (
                     director_or_producer?.slice(0, 3).map((d, i) => (
-                      <a href={`https://en.wikipedia.org/wiki/${d.name}`} key={d.credit_id} className="text-[#BE123C] underline" target="_blank" rel="noreferrer">
+                      <a href={`https://en.wikipedia.org/wiki/${d.name}`} key={d.credit_id} className="text-[#BE123C] underline text-lg" target="_blank" rel="noreferrer">
                         {d.name}
                         {i < director_or_producer.length - 1 && ","}
                       </a>
@@ -128,7 +128,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
                       <span className="text-[#BE123C] capitalize">data unavailable</span>
                     ) : (
                       filteredWriters?.slice(0, 3).map((writer, index) => (
-                        <a href={`https://en.wikipedia.org/wiki/${writer.name}`} key={writer.credit_id} className="text-[#BE123C] underline" target="_blank" rel="noreferrer">
+                        <a href={`https://en.wikipedia.org/wiki/${writer.name}`} key={writer.credit_id} className="text-[#BE123C] underline text-lg" target="_blank" rel="noreferrer">
                           {writer.name}
                           {index < writers.length - 1 && ","}
                         </a>
@@ -144,7 +144,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
                       <span className="text-[#BE123C] capitalize">data unavailable</span>
                     ) : (
                       movieCast?.slice(0, 4).map((cast, index) => (
-                        <a href={`https://en.wikipedia.org/wiki/${cast.name}`} key={cast.credit_id} className="text-[#BE123C] underline" target="_blank" rel="noreferrer">
+                        <a href={`https://en.wikipedia.org/wiki/${cast.name}`} key={cast.credit_id} className="text-[#BE123C] underline text-lg" target="_blank" rel="noreferrer">
                           {cast.name}
                           {index < movieCast.length - 1 && ","}
                         </a>
@@ -156,15 +156,15 @@ const MovieDetails = ({ movie, pathLocation }) => {
             </div>
 
             {/* showtimes */}
-            <div className="flex flex-col md:items-start xl:items-stretch self-start gap-8 w-full">
-              <div className="flex flex-col gap-3 text-lg sm:text-xl">
-                <div className="bg-[#BE123C] py-3.5 sm:px-19.5 xl:px-0 rounded-[10px] flex items-center justify-center gap-2.5 text-white capitalize cursor-pointer" role="button">
+            <div className="flex flex-col md:items-start xl:items-center self-start gap-8 w-full">
+              <div className="flex flex-col gap-3 text-lg sm:text-xl w-full items-center justify-center">
+                <div className="bg-[#BE123C] py-3.5 w-full px-24.5 rounded-[10px] flex items-center justify-center gap-2.5 text-white capitalize cursor-pointer" role="button">
                   <img src={TicketsIcon} alt="tickets icon" />
                   <span>see showtimes</span>
                 </div>
 
                 <div
-                  className="bg-[#BE123C]/10 border border-[#BE123C] py-3.5 sm:px-19.5 xl:px-0 rounded-[10px] flex items-center justify-center gap-2.5 text-[#333333] capitalize cursor-pointer"
+                  className="bg-[#BE123C]/10 border border-[#BE123C] py-3.5 w-full px-19 rounded-[10px] flex items-center justify-center gap-2.5 text-[#333333] capitalize cursor-pointer"
                   role="button">
                   <img src={ListIcon} alt="tickets icon" />
                   <span>more watch options</span>
