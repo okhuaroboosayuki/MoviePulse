@@ -15,8 +15,8 @@ const SingleMoviePage = () => {
 
   useEffect(() => {
     const onResizeNavDisplay = () => {
-      if (window.innerWidth < 1440) dispatch({ type: "navHidden", payload: true });
-      if (window.innerWidth >= 1440) dispatch({ type: "navHidden", payload: false });
+      if (window.innerWidth < 1445) dispatch({ type: "navHidden", payload: true });
+      if (window.innerWidth >= 1445) dispatch({ type: "navHidden", payload: false });
     };
     window.addEventListener("resize", onResizeNavDisplay);
 
