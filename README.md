@@ -4,10 +4,22 @@ MoviePulse is a sleek, responsive web app that taps into TMDB’s API to display
 
 ## Table of Contents
 
-1. [Features](#features)
-2. [Technologies Used](#technologies-used)
+1. [Why MoviePulse](#why-moviepulse)
+2. [Features](#features)
 3. [Figma Design](#figma-design)
 4. [License](#license)
+
+### Why MoviePulse?
+
+This project aims to provide a seamless platform for movie enthusiasts, combining functionality with
+aesthetic appeal. The core features include:
+
+1. **Modern Tech Stack**: Built with React and Tailwind CSS for a responsive and visually appealing interface.
+2. **Seamless Navigation**: Utilizes a single-page application architecture for smooth transitions and enhanced user experience.
+3. **Centralized State Management**: Employs context and custom hooks for efficient data handling, simplifying state management.
+4. **Code Quality Assurance**: Integrates ESLint to maintain coding standards, reducing bugs and improving maintainability.
+5. **Dynamic Content Loading**: Features lazy loading and spinners for a smooth user experience during data fetching.
+6. **TMDB API**: Provides data for movies, TV shows, and related information.
 
 ### Features
 
@@ -15,20 +27,6 @@ MoviePulse is a sleek, responsive web app that taps into TMDB’s API to display
 - **Search Functionality**: Find specific movies or TV series by title with dynamic search results.
 - **Detailed Information**: View in-depth details, including cast, crew, release dates, and trailers.
 - **Interactive UI**: A user-friendly interface with responsive design for seamless usage across devices.
-
-### Technologies Used
-
-- **React.js**: For building the dynamic and component-based user interface.
-
-- **React Router**: Handles client-side routing for seamless navigation.
-
-- **TypeScript**: Enhances development with type safety and better code maintainability.
-
-- **Tailwind CSS**: For styling the application with utility-first CSS.
-
-- **TMDB API**: Provides data for movies, TV shows, and related information.
-
-- **Swiper.js**: Implements responsive and customizable carousels for showcasing movies and TV shows.
 
 ### Figma Design
 
@@ -41,3 +39,8 @@ This project is licensed under the [MIT License](LICENSE.txt).
 Copyright © 2025.
 
 Web app by [Osayuki Raymond](https://x.com/osayuki__)
+
+Overview
+
+MoviePulse is a dynamic web application that revolutionizes the way users explore and discover movies,
+leveraging modern technologies for an engaging experience.
