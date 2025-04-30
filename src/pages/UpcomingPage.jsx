@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { Footer, HomeNav, MovieList, Spinner } from "../components";
 import useMovies from "../hooks/useMovies";
+import { setDocumentOverFlowDisplay } from "../utils";
 
 const UpcomingPage = () => {
   const { isLoading, upcomingMovies, fetchUpcomingMovies } = useMovies();
 
   useEffect(() => {
     fetchUpcomingMovies("us");
+    setDocumentOverFlowDisplay(false);
   }, [fetchUpcomingMovies]);
 
   const sortedUpcomingMovies = upcomingMovies.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));

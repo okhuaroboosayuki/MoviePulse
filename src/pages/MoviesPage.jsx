@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { Footer, HomeNav, MovieList, Spinner } from "../components";
 import useMovies from "../hooks/useMovies";
+import { setDocumentOverFlowDisplay } from "../utils";
 
 const MoviesPage = () => {
   const { isLoading, allMovies, fetchMovies } = useMovies();
 
   useEffect(() => {
     fetchMovies("us");
+    setDocumentOverFlowDisplay(false);
   }, [fetchMovies]);
 
   const sortedMovies = (Array.isArray(allMovies) ? allMovies : []).sort((a, b) => b.vote_average - a.vote_average);
