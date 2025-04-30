@@ -3,8 +3,8 @@
  *
  * @param {boolean} isOpen - If true, disables scrolling by setting overflow to hidden. If false, restores scrolling by resetting overflow properties.
  */
-function setDocumentOverFlow(isOpen) {
-  isOpen ? (document.body.style.overflow = "") : (document.body.style.overflow = "hidden");
+function setDocumentOverFlowDisplay(isOpen) {
+  !isOpen ? (document.body.style.overflow = "") : (document.body.style.overflow = "hidden");
 }
 
-export default setDocumentOverFlow;
+export default setDocumentOverFlowDisplay;

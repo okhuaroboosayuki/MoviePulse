@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchInput from "./SearchInput";
 import Logo from "/assets/icons/tv.png";
-import { setDocumentOverFlow } from "../utils";
+import { setDocumentOverFlowDisplay } from "../utils";
 import { Link, useNavigate } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
 
@@ -14,13 +14,13 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
   const handleMenuToggle = () => {
     const menuIcon = document.getElementById("mobileMenuIcon");
     const menu = document.getElementById("mobileMenu");
-    const screenSizeLarge = window.innerWidth <= 640;
+    const isScreenSizeSmall = window.innerWidth <= 640;
 
     if (menuIcon) {
       menuIcon.classList.toggle("toggle-menu");
       menu.classList.toggle("hidden");
 
-      menuIcon.classList.contains("toggle-menu") && screenSizeLarge ? setDocumentOverFlow(false) : setDocumentOverFlow(true);
+      menuIcon.classList.contains("toggle-menu") && isScreenSizeSmall ? setDocumentOverFlowDisplay(true) : setDocumentOverFlowDisplay(false);
     }
   };
 
