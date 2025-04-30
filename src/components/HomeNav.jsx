@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
-import SearchInput from "./SearchInput";
-import Logo from "/assets/icons/tv.png";
-import { setDocumentOverFlowDisplay } from "../utils";
 import { Link, useNavigate } from "react-router-dom";
+import SearchInput from "./SearchInput";
+import { setDocumentOverFlowDisplay } from "../utils";
 import useDebounce from "../hooks/useDebounce";
+import useAuth from "../hooks/useAuth";
+import Logo from "/assets/icons/tv.png";
+import NoPicFound from "/assets/images/no_profile_image.webp";
 
 const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
+  const { session } = useAuth();
+
+  const { avatar_url } = session?.user?.identities[0]?.identity_data || {};
+  const avatarImage = avatar_url ? avatar_url : NoPicFound;
+
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -61,8 +68,14 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
         onClick={handleSearchClick}
       />
 
-      <div className={`flex items-center gap-7 ${textColor}`}>
-        <button className="capitalize font-bold lg:block hidden">sign in</button>
+      <div className={`flex items-center sm:gap-7 gap-3 ${textColor}`}>
+        {session ? (
+          <img src={avatarImage} alt="" className="rounded-full cursor-pointer" loading="lazy" width={38} height={38} />
+        ) : (
+          <Link to={"sign-in"} className="capitalize font-bold lg:block hidden hover:underline">
+            sign in
+          </Link>
+        )}
 
         <button
           id="mobileMenuIcon"
@@ -105,9 +118,13 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
               />
             </li>
             <li className="w-full lg:hidden flex items-center">
-              <Link to={"/"} className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">
-                sign in
-              </Link>
+              {session ? (
+                <button className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">Sign out</button>
+              ) : (
+                <Link to={"sign-in"} className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">
+                  sign in
+                </Link>
+              )}
             </li>
           </ol>
         </div>
