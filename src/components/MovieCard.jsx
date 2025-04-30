@@ -25,7 +25,7 @@ const MovieCard = ({ movie, media }) => {
   return (
     <li className="w-full h-fit flex flex-col items-start justify-center gap-3">
       <div
-        className="h-[370px] w-full bg-gray-400 bg-blend-multiply"
+        className="sm:h-[400px] h-[530px] w-full bg-gray-400 bg-blend-multiply"
         style={{
           backgroundImage: `url(${imageURL})`,
           backgroundPosition: "center",
