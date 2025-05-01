@@ -1,19 +1,28 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Logo from "/assets/icons/tv.png";
 import { CalendarIcon, HomeIcon, LogoutIcon, ProjectorIcon, TvIcon } from "../jsx-icons";
 import CustomNavLink from "./CustomNavLink";
 import useMovies from "../hooks/useMovies";
+import useAuth from "../hooks/useAuth";
 
 const SideNav = ({ pathLocation }) => {
-  const { isNavHidden, handleNavDisplay } = useMovies();
-
+  const navigate = useNavigate();
   const { id } = useParams();
+
+  const { isNavHidden, handleNavDisplay } = useMovies();
+  const { signOut } = useAuth();
+
   const isMovie = pathLocation.pathname.includes("movie");
   const isTvSeries = pathLocation.pathname.includes("tv-series");
 
   const dynamicPath = isMovie ? "movie" : isTvSeries ? "tv-series" : "upcoming";
 
   const isActivePath = (path) => location.pathname === path;
+
+  const handleSignOut = () => {
+    signOut();
+    navigate("/sign-in");
+  };
 
   return (
     <nav className="fixed top-0 left-0 overflow-y-scroll hidden-scrollbar transition-1000-in bg-white flex flex-col item-center py-8 gap-18 border-r h-screen border-r-gray-400 rounded-tr-[4%] rounded-br-[4%] z-10">
@@ -49,7 +58,7 @@ const SideNav = ({ pathLocation }) => {
         </div>
       )}
 
-      <button className="flex item-center gap-2.5 px-4 text-[#666666] text-xl font-semibold cursor-pointer xl:ml-10 -mt-6">
+      <button className="flex item-center gap-2.5 px-4 text-[#666666] text-xl font-semibold cursor-pointer xl:ml-10 -mt-6" onClick={handleSignOut}>
         <LogoutIcon width={"25px"} height={"25px"} fillColor="#808080" />
         {!isNavHidden && <span>Log out</span>}
       </button>

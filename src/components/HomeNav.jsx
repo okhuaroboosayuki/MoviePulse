@@ -8,7 +8,7 @@ import Logo from "/assets/icons/tv.png";
 import NoPicFound from "/assets/images/no_profile_image.webp";
 
 const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
-  const { session } = useAuth();
+  const { session, signOut } = useAuth();
 
   const { avatar_url } = session?.user?.identities[0]?.identity_data || {};
   const avatarImage = avatar_url ? avatar_url : NoPicFound;
@@ -40,6 +40,11 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
     if (menuIcon.classList.contains("toggle-menu")) handleMenuToggle();
 
     navigate(`/search?q=${debouncedSearchQuery}`);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    navigate("/sign-in");
   };
 
   useEffect(() => {
@@ -117,11 +122,13 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
                 onClick={handleSearchClick}
               />
             </li>
-            <li className="w-full lg:hidden flex items-center">
+            <li className="w-full flex items-center">
               {session ? (
-                <button className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">Sign out</button>
+                <button onClick={handleSignOut} className="hover:text-[#BE123C] cursor-pointer hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">
+                  Sign out
+                </button>
               ) : (
-                <Link to={"sign-in"} className="hover:text-[#BE123C] hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">
+                <Link to={"sign-in"} className="hover:text-[#BE123C] lg:hidden block hover:bg-white border bg-[#BE123C] text-white text-center rounded-md p-3 w-full">
                   sign in
                 </Link>
               )}
