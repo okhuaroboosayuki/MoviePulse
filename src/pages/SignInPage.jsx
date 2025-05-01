@@ -15,8 +15,8 @@ const SignInPage = () => {
       <title>Sign In With Google | MoviePulse</title>
       <meta name="description" content="Sign in to MoviePulse using your Google account." />
 
-      <div className="w-full flex flex-col items-center px-10 xl:px-20 h-screen bg-gray-100">
-        <header className="w-full flex flex-col items-start px-10 xl:px-20 p-8">
+      <div className="w-full flex flex-col items-center px-2 sm:px-10 xl:px-20 h-screen bg-gray-100">
+        <header className="w-full flex flex-col items-start px-2 sm:px-10 xl:px-20 p-8">
           <Link to={"/"} className="flex items-center justify-center gap-3 lg:gap-6 text-lg lg:text-2xl font-bold z-50">
             <img src={Logo} alt="MoviePulse's logo" />
             <span className={"text-[#111827]"}>MoviePulse</span>

@@ -4,9 +4,10 @@ import { Spinner } from "./components";
 import { MoviesProvider } from "./contexts/MoviesContext";
 import PageNotFound from "./pages/PageNotFound";
 import { AuthProvider } from "./contexts/AuthContext";
+import SignInPage from "./pages/SIgnInPage";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const SignInPage = lazy(() => import("./pages/SignInPage"));
 const FeaturedMovies = lazy(() => import("./pages/FeaturedMovies"));
 const SearchPage = lazy(() => import("./pages/SearchPage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
@@ -26,15 +27,72 @@ const App = () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="sign-in" element={<SignInPage />} />
-              <Route path="featured-movies" element={<FeaturedMovies />} />
-              <Route path="search" element={<SearchPage />} />
-              <Route path="movies" element={<MoviesPage />} />
-              <Route path="tv-series" element={<TvSeriesPage />} />
-              <Route path="upcoming" element={<Upcoming />} />
 
-              <Route path="movie/:id" element={<SingleMoviePage />} />
-              <Route path="tv-series/:id" element={<SingleTvSeriesPage />} />
-              <Route path="upcoming/:id" element={<SingleUpcomingMovie />} />
+              <Route
+                path="featured-movies"
+                element={
+                  <ProtectedRoutes>
+                    <FeaturedMovies />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="search"
+                element={
+                  <ProtectedRoutes>
+                    <SearchPage />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="movies"
+                element={
+                  <ProtectedRoutes>
+                    <MoviesPage />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="tv-series"
+                element={
+                  <ProtectedRoutes>
+                    <TvSeriesPage />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="upcoming"
+                element={
+                  <ProtectedRoutes>
+                    <Upcoming />
+                  </ProtectedRoutes>
+                }
+              />
+
+              <Route
+                path="movie/:id"
+                element={
+                  <ProtectedRoutes>
+                    <SingleMoviePage />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="tv-series/:id"
+                element={
+                  <ProtectedRoutes>
+                    <SingleTvSeriesPage />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="upcoming/:id"
+                element={
+                  <ProtectedRoutes>
+                    <SingleUpcomingMovie />
+                  </ProtectedRoutes>
+                }
+              />
 
               <Route path="*" element={<PageNotFound />} />
             </Routes>
