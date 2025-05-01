@@ -39,7 +39,9 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
     const menuIcon = document.getElementById("mobileMenuIcon");
     if (menuIcon.classList.contains("toggle-menu")) handleMenuToggle();
 
-    navigate(`/search?q=${debouncedSearchQuery}`);
+    if (debouncedSearchQuery.length > 0) {
+      navigate(`/search?q=${debouncedSearchQuery}`);
+    }
   };
 
   const handleSignOut = () => {
