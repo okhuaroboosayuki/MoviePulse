@@ -4,10 +4,10 @@ import { Spinner } from "./components";
 import { MoviesProvider } from "./contexts/MoviesContext";
 import PageNotFound from "./pages/PageNotFound";
 import { AuthProvider } from "./contexts/AuthContext";
-import SignInPage from "./pages/SIgnInPage";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
+const SignInPage = lazy(() => import("./pages/SignInPage"));
 const FeaturedMovies = lazy(() => import("./pages/FeaturedMovies"));
 const SearchPage = lazy(() => import("./pages/SearchPage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
