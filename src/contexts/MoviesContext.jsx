@@ -1,4 +1,5 @@
 import { createContext, useCallback, useEffect, useReducer } from "react";
+import { supabase } from "../supabase/supabaseClient";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
@@ -25,6 +26,7 @@ const initialState = {
   currentMovie: {},
   currentSeries: {},
   currentUpcomingMovie: {},
+  userFavoriteMovies: {},
 };
 
 const reducer = (state, action) => {
@@ -83,6 +85,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         currentUpcomingMovie: action.payload,
+      };
+    case "favoriteMovies/loaded":
+      return {
+        ...state,
+        userFavoriteMovies: action.payload,
       };
     default:
       return state;
@@ -246,13 +253,40 @@ const MoviesProvider = ({ children }) => {
     [dispatch]
   );
 
+  const fetchUserFavoriteMovies = useCallback(
+    async (id) => {
+      dispatch({ type: "loading", payload: true });
+      try {
+        const { data } = await supabase.from("favorite_movies").select("*").eq("user_id", id);
+        dispatch({ type: "favoriteMovies/loaded", payload: data });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        dispatch({ type: "loading", payload: false });
+      }
+    },
+    [dispatch]
+  );
+
   const handleNavDisplay = () => {
     dispatch({ type: "navHidden", payload: !state.isNavHidden });
   };
 
   return (
     <MoviesContext.Provider
-      value={{ ...state, searchMovies, fetchUpcomingMovies, fetchMovies, fetchSeries, fetchSingleMovie, fetchSingleSeries, fetchSingleUpcomingMovie, handleNavDisplay, dispatch }}>
+      value={{
+        ...state,
+        searchMovies,
+        fetchUpcomingMovies,
+        fetchMovies,
+        fetchSeries,
+        fetchSingleMovie,
+        fetchSingleSeries,
+        fetchSingleUpcomingMovie,
+        fetchUserFavoriteMovies,
+        handleNavDisplay,
+        dispatch,
+      }}>
       {children}
     </MoviesContext.Provider>
   );

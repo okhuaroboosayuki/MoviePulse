@@ -7,3 +7,5 @@ export { default as MovieDetails } from "./MovieDetails";
 export { default as Message } from "./Message";
 export { default as SideNav } from "./SideNav";
 export { default as Spinner } from "./Spinner";
+export { default as FavoriteMovieList } from "./favoriteMovies/FavoriteMovieList";
+export { default as FavoriteMovieCard } from "./favoriteMovies/FavoriteMovieCard";
