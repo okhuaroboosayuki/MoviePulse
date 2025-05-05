@@ -13,6 +13,7 @@ const SearchPage = lazy(() => import("./pages/SearchPage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
 const TvSeriesPage = lazy(() => import("./pages/TvSeriesPage"));
 const Upcoming = lazy(() => import("./pages/UpcomingPage"));
+const FavoriteMoviesPage = lazy(() => import("./pages/FavoriteMoviesPage"));
 
 const SingleTvSeriesPage = lazy(() => import("./pages/SingleTvSeriesPage"));
 const SingleMoviePage = lazy(() => import("./pages/SingleMoviePage"));
@@ -65,6 +66,14 @@ const App = () => {
                 element={
                   <ProtectedRoutes>
                     <Upcoming />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="favorite-movies"
+                element={
+                  <ProtectedRoutes>
+                    <FavoriteMoviesPage />
                   </ProtectedRoutes>
                 }
               />
