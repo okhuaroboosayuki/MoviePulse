@@ -21,13 +21,34 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
   const handleMenuToggle = () => {
     const menuIcon = document.getElementById("mobileMenuIcon");
     const menu = document.getElementById("mobileMenu");
+    const profileOptions = document.getElementById("profileOptions");
     const isScreenSizeSmall = window.innerWidth <= 640;
 
     if (menuIcon) {
+      if (profileOptions && !profileOptions.classList.contains("hidden")) profileOptions.classList.add("hidden");
+
       menuIcon.classList.toggle("toggle-menu");
       menu.classList.toggle("hidden");
 
       menuIcon.classList.contains("toggle-menu") && isScreenSizeSmall ? setDocumentOverFlowDisplay(true) : setDocumentOverFlowDisplay(false);
+    }
+  };
+
+  const handleProfileOptionsToggle = () => {
+    const profileOptions = document.getElementById("profileOptions");
+    const menuIcon = document.getElementById("mobileMenuIcon");
+    const menu = document.getElementById("mobileMenu");
+    const isScreenSizeSmall = window.innerWidth <= 640;
+
+    if (profileOptions) {
+      if (menuIcon.classList.contains("toggle-menu")) {
+        menuIcon.classList.remove("toggle-menu");
+        menu.classList.add("hidden");
+
+        if (isScreenSizeSmall) setDocumentOverFlowDisplay(false);
+      }
+
+      profileOptions.classList.toggle("hidden");
     }
   };
 
@@ -50,17 +71,26 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
   };
 
   useEffect(() => {
-    const menuIcon = document.getElementById("mobileMenuIcon");
+    const handleResize = () => {
+      const menuIcon = document.getElementById("mobileMenuIcon");
+      const profileOptions = document.getElementById("profileOptions");
 
-    window.addEventListener("resize", () => {
-      if (menuIcon.classList.contains("toggle-menu")) handleMenuToggle();
-    });
+      if (menuIcon?.classList.contains("toggle-menu")) {
+        handleMenuToggle();
+      }
 
-    return () => window.removeEventListener("resize", handleMenuToggle);
+      if (profileOptions && !profileOptions.classList.contains("hidden")) {
+        handleProfileOptionsToggle();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", () => handleResize);
   }, []);
 
   return (
-    <div className="flex items-center justify-between py-5 w-full z-10">
+    <nav className="flex items-center justify-between py-5 w-full z-10">
       <Link to={"/"} className="flex items-center justify-center gap-3 lg:gap-6 text-lg lg:text-2xl font-bold z-50">
         <img src={Logo} alt="MoviePulse's logo" />
         <span className={textColor}>MoviePulse</span>
@@ -77,7 +107,19 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
 
       <div className={`flex items-center sm:gap-7 gap-3 ${textColor}`}>
         {session ? (
-          <img src={avatarImage} alt="" className="rounded-full cursor-pointer" loading="lazy" width={38} height={38} />
+          <div className="relative flex flex-col items-center justify-center gap-2 w-full">
+            <img src={avatarImage} alt="" className="rounded-full cursor-pointer z-30" loading="lazy" width={38} height={38} onClick={handleProfileOptionsToggle} />
+
+            <div className={`hidden bg-white absolute py-5 px-8 z-20 top-12 text-[#333333] animate-fade-in-scale w-fit md:min-h-0 h-fit rounded-md border ${borderColor}`} id="profileOptions">
+              <ol className="flex flex-col items-start justify-start gap-6 capitalize mt-0">
+                <li className="border-b w-full">
+                  <Link to={"/favorite-movies"} className="hover:text-[#BE123C]">
+                    favourites
+                  </Link>
+                </li>
+              </ol>
+            </div>
+          </div>
         ) : (
           <Link to={"sign-in"} className="capitalize font-bold lg:block hidden hover:underline">
             sign in
@@ -96,7 +138,7 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
         </button>
 
         <div
-          className="hidden bg-white absolute py-10 px-8 z-20 md:top-18 top-0 lg:right-16 xl:right-20 md:right-8 right-0 text-[#333333] animate-fade-in-scale md:w-[25%] lg:w-[18%] xl:w-[15%] w-full md:min-h-0 min-h-screen"
+          className={`hidden bg-white absolute py-10 px-8 z-20 md:top-18 top-0 lg:right-16 xl:right-20 md:right-8 right-0 text-[#333333] animate-fade-in-scale md:w-[25%] lg:w-[18%] xl:w-[15%] w-full md:min-h-0 min-h-screen rounded-md border ${borderColor}`}
           id="mobileMenu">
           <ol className="flex flex-col items-start justify-start gap-6 capitalize mt-20 md:mt-0">
             <li className="border-b w-full">
@@ -138,7 +180,7 @@ const HomeNav = ({ textColor, borderColor, svgStrokeColor }) => {
           </ol>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
