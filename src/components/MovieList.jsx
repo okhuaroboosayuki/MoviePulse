@@ -36,7 +36,7 @@ const MovieList = memo(function MovieList({ movies, title, msgText, queryText, e
       </div>
 
       {movies?.length > 0 ? (
-        <ol className="grid 2xl:grid-cols-4 2xl:grid-row-4 lg:grid-cols-3 lg:grid-rows-3 md:grid-cols-2 md:grid-rows-2 gap-20 w-full place-items-start mt-11">
+        <ol className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-20 p-0 w-full place-items-start mt-11">
           {movies?.map((movie) => (
             <MovieCard key={movie.id} movie={movie} media={media} />
           ))}

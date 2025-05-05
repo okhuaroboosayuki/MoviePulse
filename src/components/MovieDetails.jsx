@@ -71,7 +71,7 @@ const MovieDetails = ({ movie, pathLocation }) => {
         </div>
       )}
 
-      <section className="flex items-start justify-between px-5 py-7 gap-4">
+      <section className="flex items-start justify-between sm:px-5 py-7 gap-4">
         <div className="flex flex-col gap-6 items-start justify-center w-full">
           <div className="flex items-center w-full justify-between gap-4 lg:gap-8 flex-wrap">
             {/* title, genre */}
@@ -158,15 +158,15 @@ const MovieDetails = ({ movie, pathLocation }) => {
             {/* showtimes */}
             <div className="flex flex-col md:items-start xl:items-center self-start gap-8 w-full">
               <div className="flex flex-col gap-3 text-lg sm:text-xl w-full items-center justify-center">
-                <div className="bg-[#BE123C] py-3.5 w-full px-24.5 rounded-[10px] flex items-center justify-center gap-2.5 text-white capitalize cursor-pointer" role="button">
+                <div className="bg-[#BE123C] py-3.5 w-full md:px-24.5 rounded-[10px] flex items-center justify-center gap-2.5 text-white capitalize cursor-pointer" role="button">
                   <img src={TicketsIcon} alt="tickets icon" />
                   <span>see showtimes</span>
                 </div>
 
                 <div
-                  className="bg-[#BE123C]/10 border border-[#BE123C] py-3.5 w-full px-19 rounded-[10px] flex items-center justify-center gap-2.5 text-[#333333] capitalize cursor-pointer"
+                  className="bg-[#BE123C]/10 border border-[#BE123C] py-3.5 w-full md:px-19 rounded-[10px] flex items-center justify-center gap-2.5 text-[#333333] capitalize cursor-pointer"
                   role="button">
-                  <img src={ListIcon} alt="tickets icon" />
+                  <img src={ListIcon} alt="list icon" />
                   <span>more watch options</span>
                 </div>
               </div>

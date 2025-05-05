@@ -3,11 +3,17 @@ import useMovies from "../hooks/useMovies";
 import { formatDate, truncateDecimals } from "../utils";
 import ImdbIcon from "/assets/icons/imdb_icon.svg";
 import RottenIcon from "/assets/icons/rotten_tomatoes_icon.svg";
+import useAuth from "../hooks/useAuth";
+import { supabase } from "../supabase/supabaseClient";
+import { useEffect, useState } from "react";
 
 const URL = import.meta.env.VITE_IMAGE_URL;
 
 const MovieCard = ({ movie, media }) => {
   const { genres } = useMovies();
+  const { id } = useAuth();
+
+  const [isMovieInFavorites, setIsMovieInFavorites] = useState(false);
 
   const currentMovieGenres = Array.isArray(movie.genre_ids)
     ? movie.genre_ids.map((id) => {
@@ -22,10 +28,51 @@ const MovieCard = ({ movie, media }) => {
 
   const mediaType = movie.media_type ? (movie.media_type === "movie" ? "movie" : "tv-series") : media;
 
+  const newFavoriteMovie = {
+    user_id: id,
+    movie_id: movie.id,
+    movie_poster_path: movie.poster_path,
+    movie_title: movie.title || movie.name,
+    movie_release_date: movie.release_date || movie.first_air_date,
+    movie_vote_average: movie.vote_average,
+    movie_overview: movie.overview,
+    movie_genres: currentMovieGenres,
+    movie_media_type: mediaType,
+    movie_origin_country: movie.origin_country,
+  };
+
+  const addFavoriteMovie = async () => {
+    if (!id) return;
+    await supabase.from("favorite_movies").insert([newFavoriteMovie]);
+    setIsMovieInFavorites(true);
+  };
+
+  const removeFavoriteMovie = async () => {
+    if (!id) return;
+    await supabase.from("favorite_movies").delete().eq("user_id", id).eq("movie_id", movie.id);
+    setIsMovieInFavorites(false);
+  };
+
+  useEffect(() => {
+    // check if the movie is already in the favorites list
+    const checkIfMovieExists = async () => {
+      const { data, error } = await supabase.from("favorite_movies").select("*").eq("user_id", id).eq("movie_id", movie.id);
+
+      if (error) {
+        console.error("Error checking favorite movies:", error);
+      } else if (data.length > 0) {
+        // Movie already exists in the favorites list
+        setIsMovieInFavorites(true);
+      }
+    };
+
+    checkIfMovieExists();
+  }, [id, movie.id]);
+
   return (
     <li className="w-full h-fit flex flex-col items-start justify-center gap-3">
       <div
-        className="sm:h-[400px] h-[530px] w-full bg-gray-400 bg-blend-multiply"
+        className="lg:h-[490px] sm:h-[600px] h-[530px] w-full bg-gray-400 bg-blend-multiply"
         style={{
           backgroundImage: `url(${imageURL})`,
           backgroundPosition: "center",
@@ -34,7 +81,7 @@ const MovieCard = ({ movie, media }) => {
         <div className="w-full flex items-center justify-between pt-4 px-4">
           <span className={mediaType === "tv-series" ? "py-[3px] px-2 rounded-xl uppercase bg-[#F3F4F680] text-[14px]" : ""}>{mediaType === "tv-series" ? "tv series" : ""}</span>
 
-          <span className="cursor-pointer">
+          <span className="cursor-pointer" onClick={() => (isMovieInFavorites ? removeFavoriteMovie() : addFavoriteMovie())}>
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <foreignObject x="-2" y="-1.42105" width="34" height="33.2105">
                 <div
@@ -52,7 +99,7 @@ const MovieCard = ({ movie, media }) => {
                 fillRule="evenodd"
                 clipRule="evenodd"
                 d="M8.17157 10.4828C9.73367 8.96185 12.2663 8.96185 13.8284 10.4828L15 11.6236L16.1716 10.4828C17.7337 8.96185 20.2663 8.96185 21.8284 10.4828C23.3905 12.0038 23.3905 14.4698 21.8284 15.9908L15 22.6396L8.17157 15.9908C6.60948 14.4698 6.60948 12.0038 8.17157 10.4828Z"
-                fill="#D1D5DB"
+                fill={isMovieInFavorites ? "#BE123C" : "#D1D5DB"}
               />
               <defs>
                 <clipPath id="bgblur_0_44049_78_clip_path" transform="translate(2 1.42105)">
