@@ -1,18 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
+import Spinner from "./../components/Spinner";
 
 const ProtectedRoutes = ({ children }) => {
   const navigate = useNavigate();
-  const { id } = useAuth();
+  const { id, loading } = useAuth();
 
   useEffect(() => {
-    if (!id) {
+    if (!id && !loading) {
       navigate("/sign-in", { replace: true });
     }
-  }, [id, navigate]);
+  }, [id, loading, navigate]);
 
-  return id ? children : null;
+  return <>{loading ? <Spinner /> : <>{id ? children : null}</>}</>;
 };
 
 export default ProtectedRoutes;

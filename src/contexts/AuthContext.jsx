@@ -6,12 +6,14 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [id, setId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       if (session) {
         setId(session.user.id);
+        setLoading(false);
         // check if user exists in the database
         const { data, error } = await supabase.from("Users").select("*").eq("user_id", session.user.id).single();
         if (error) console.error("Error fetching user data:", error.message);
@@ -47,7 +49,7 @@ const AuthProvider = ({ children }) => {
     if (error) console.error("Error signing out:", error.message);
   };
 
-  return <AuthContext.Provider value={{ session, id, signIn, signOut }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ session, id, loading, signIn, signOut }}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };
