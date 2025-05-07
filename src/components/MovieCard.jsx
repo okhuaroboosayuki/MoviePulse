@@ -54,6 +54,8 @@ const MovieCard = ({ movie, media }) => {
   };
 
   useEffect(() => {
+    if (!id) return;
+
     // check if the movie is already in the favorites list
     const checkIfMovieExists = async () => {
       const { data, error } = await supabase.from("favorite_movies").select("*").eq("user_id", id).eq("movie_id", movie.id);

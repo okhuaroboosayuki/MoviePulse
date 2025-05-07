@@ -45,7 +45,7 @@ const FavoriteMoviesPage = () => {
             )}
           </div>
 
-          {isLoading ? <Spinner /> : <FavoriteMovieList movies={userFavoriteMovies} msgText="you have no favorite movies or show" />}
+          {isLoading ? <Spinner /> : <FavoriteMovieList movies={userFavoriteMovies} msgText="you have no favorite movies or shows" />}
         </div>
 
         <Footer />
