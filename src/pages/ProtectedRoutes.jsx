@@ -1,19 +1,17 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import useAuth from "../hooks/useAuth";
-import Spinner from "./../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const ProtectedRoutes = ({ children }) => {
   const navigate = useNavigate();
-  const { id, loading } = useAuth();
+  const isAuth = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
-    if (!id && !loading) {
+    if (!isAuth) {
       navigate("/sign-in", { replace: true });
     }
-  }, [id, loading, navigate]);
+  }, [isAuth, navigate]);
 
-  return <>{loading ? <Spinner /> : <>{id ? children : null}</>}</>;
+  return isAuth && children;
 };
 
 export default ProtectedRoutes;
