@@ -24,10 +24,6 @@ const FavoriteMoviesPage = () => {
         fetchUserFavoriteMovies(id);
       })
       .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    };
   }, [fetchUserFavoriteMovies, id]);
 
   return (
